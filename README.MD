@@ -1,2 +1,1 @@
--There will be "Sample Project" containing very sample knowledge topics implemented by sample codes to simplify the understanding
--There will be "branch" for each "Sample Project"
+
