@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans">
+
+    <!-- Instantiate the JDBC driver to load it's classes used to connect to the DB--> 
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<!-- com.mysql.jdbc.Driver exist in mysql connector driver -->
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/springsamplesschema" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+	</bean>
+
+
+    <!-- Instantiate object from the SecurityDAOImpl to be used to query the data -->
+    <!-- This will pass dataSource input parameter to the constructor and it's value -->
+    <!-- which is the instance instantiated in the bean with id dataSource in the current file  -->	
+	<bean id="SecurityDAOBean" class="org.spring5samples.DAOs.SecurityDAOImpl">
+		<constructor-arg name="dataSource" ref="dataSource"/>	
+	</bean>
+
+</beans>
