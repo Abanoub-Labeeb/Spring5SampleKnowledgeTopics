@@ -1,0 +1,44 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="
+   http://www.springframework.org/schema/beans     
+   http://www.springframework.org/schema/beans/spring-beans.xsd
+   http://www.springframework.org/schema/context 
+   http://www.springframework.org/schema/context/spring-context.xsd
+   http://www.springframework.org/schema/jee 
+   http://www.springframework.org/schema/jee/spring-jee-4.3.xsd
+   http://www.springframework.org/schema/mvc 
+   http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+   http://www.springframework.org/schema/aop
+   https://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+   ">
+   
+   
+   
+   <bean id ="AccountOperations" class="org.spring5samples.BusinessLogic.AccountOperations"/>
+   <bean id ="Logger"            class="org.spring5samples.aspects.Logger"/>
+   
+   <!-- We configured that we want to trigger the Logger.Log() before the execution of withdraw() -->
+   <aop:config>
+      <!-- we can define point cut inside an aspect or separated from each other  -->
+      
+      <!-- define point cut separated from aspect -->
+      <aop:pointcut id="withdraw-pointcut" expression="execution(void org.spring5samples.BusinessLogic.AccountOperations.withdraw())" />
+      <aop:aspect ref="Logger">
+        <aop:after method="log" pointcut-ref="withdraw-pointcut"/>
+      </aop:aspect>
+      
+      
+      <!-- define anoynymous pointcut separated inside an aspect -->
+      <aop:aspect ref="Logger">
+        <aop:before method="log" pointcut="execution(void org.spring5samples.BusinessLogic.AccountOperations.withdraw())"/>
+      </aop:aspect>
+      
+      
+   </aop:config>
+   </beans>
